@@ -1,0 +1,17 @@
+.header {
+  padding: 0 to-rem(20px);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: to-rem(20px);
+}
+
+.button {
+  padding: to-rem(13px) to-rem(3px);
+  &:first-of-type {
+    margin-left: to-rem(8px);
+  }
+  &_active {
+    border-bottom: 1px solid var(--primary-color);
+  }
+}
