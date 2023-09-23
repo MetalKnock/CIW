@@ -1,0 +1,26 @@
+.table {
+  border-collapse: collapse;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  line-height: var(--line-height-sm);
+  letter-spacing: var(--letter-spacing-sm);
+  width: 100%;
+}
+
+.headerCell {
+  padding: 0 to-rem(12px) to-rem(12px) to-rem(12px);
+  color: var(--quaternary-color);
+  text-align: start;
+  font-weight: var(--font-weight-sm);
+}
+
+.headerRow {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.loaderWrapper {
+  margin: auto;
+  height: 100%;
+  display: flex;
+}
