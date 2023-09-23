@@ -1,0 +1,58 @@
+.navButtons {
+  display: flex;
+  padding: to-rem(6px);
+  width: fit-content;
+  position: relative;
+
+  &_enabled {
+    &:hover {
+      gap: to-rem(10px);
+      border-radius: 6px;
+      background: var(--border-color);
+      & .deleteButton {
+        display: flex;
+      }
+    }
+  }
+
+  &_child {
+    &::before {
+      content: '';
+      position: absolute;
+      left: to-rem(-6px);
+      top: 50%;
+      width: to-rem(12px);
+      height: to-rem(1px);
+      background: var(--quaternary1-color);
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: to-rem(14px);
+      left: to-rem(-6px);
+      height: to-rem(63px);
+      width: to-rem(1px);
+      background: var(--quaternary1-color);
+    }
+  }
+
+  // &_parent {
+  //   &::after {
+  //     content: '';
+  //     position: absolute;
+  //     top: to-rem(22px);
+  //     transform: translateX(-50%);
+  //     left: 50%;
+  //     height: to-rem(22px);
+  //     width: to-rem(1px);
+  //     background: var(--quaternary1-color);
+  //   }
+  // }
+}
+
+.createButton {
+  z-index: 1;
+}
+.deleteButton {
+  display: none;
+}
