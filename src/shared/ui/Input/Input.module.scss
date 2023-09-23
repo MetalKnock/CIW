@@ -1,0 +1,12 @@
+.inputWrapper {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.input {
+  color: var(--quaternary2-color);
+  border: none;
+  background: transparent;
+  padding: to-rem(10px);
+  outline: none;
+}
