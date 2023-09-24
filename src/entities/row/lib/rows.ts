@@ -18,48 +18,55 @@ export function findRowById(rows: Rows, id: number): Row | null {
   return null;
 }
 
-export function updateNestedArray(
-  existingArray: Rows,
-  updateData: ResponseRows,
-  currentData?: ResponseRow,
-  hasDefaultInit?: boolean
-) {
-  return existingArray.map((item) => {
-    const matchingItem = updateData.find((newItem) => newItem.id === item.id);
+export function updateNestedRowsWithUpdateData(existingArray: Rows, updateRowData: ResponseRows) {
+  return existingArray.map((row) => {
+    const isMatchingRow = updateRowData.find((newRow) => newRow.id === row.id);
 
-    if (hasDefaultInit && currentData && item.id === INIT_ROW.id) {
-      return { ...currentData, child: [] };
+    if (!isMatchingRow) {
+      return row;
     }
 
-    if (!hasDefaultInit && currentData && item.id === currentData.id) {
-      return { ...currentData, child: [...item.child] };
-    }
-
-    if (!matchingItem) {
-      return item;
-    }
-
-    const updatedItem: Row = {
-      ...item,
-      ...matchingItem,
+    const updatedRow: Row = {
+      ...row,
+      ...isMatchingRow,
     };
 
-    if (item.child && item.child.length > 0) {
-      updatedItem.child = updateNestedArray(item.child, updateData, currentData, hasDefaultInit);
+    if (row.child && row.child.length > 0) {
+      updatedRow.child = updateNestedRowsWithUpdateData(row.child, updateRowData);
     }
 
-    return updatedItem;
+    return updatedRow;
   });
 }
 
-export function filterNestedArray(existingArray: Rows, idForFiltering: number) {
-  return existingArray.filter((item) => {
-    if (item.child && item.child.length > 0) {
-      item.child = filterNestedArray(item.child, idForFiltering);
+export function updateNestedRowsWithCurrentData(
+  existingArray: Rows,
+  currentRowData: ResponseRow,
+  hasDefaultInit?: boolean
+) {
+  return existingArray.map((row) => {
+    const isMatchingRow = row.id === (hasDefaultInit ? INIT_ROW.id : currentRowData.id);
+    const updatedRow: Row = isMatchingRow ? { ...row, ...currentRowData } : { ...row };
+
+    if (!isMatchingRow && row.child && row.child.length > 0) {
+      updatedRow.child = updateNestedRowsWithCurrentData(row.child, currentRowData, hasDefaultInit);
     }
 
-    return item.id !== idForFiltering;
+    return updatedRow;
   });
+}
+
+export function filterNestedRowById(rows: Rows, idToDelete: number): Row[] {
+  return rows.reduce((filteredRows: Row[], row: Row) => {
+    if (row.id === idToDelete) {
+      return filteredRows;
+    }
+
+    const filteredChild = row.child ? filterNestedRowById(row.child, idToDelete) : [];
+    const newRow: Row = { ...row, child: filteredChild };
+
+    return [...filteredRows, newRow];
+  }, []);
 }
 
 export function countAncestors(rows: Rows, targetId: number) {

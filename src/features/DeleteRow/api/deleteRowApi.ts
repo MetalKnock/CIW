@@ -1,7 +1,8 @@
 import { baseApi } from '@/shared/api/baseApi';
 import { RequestDeleteRow, ResponseDeleteRow } from '../model/types';
 import { rowApi } from '@/entities/row/api/rowApi';
-import { filterNestedArray, updateNestedArray } from '@/entities/row/lib/rows';
+import { filterNestedRowById, updateNestedRowsWithUpdateData } from '@/entities/row/lib/rows';
+import { handleError } from '@/shared/lib/error';
 
 export const deleteRowApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -18,14 +19,14 @@ export const deleteRowApi = baseApi.injectEndpoints({
 
           dispatch(
             rowApi.util.updateQueryData('getList', entityId, (rowList) => {
-              const updatedArray = updateNestedArray(rowList, updatedRow.changed);
-              const filteredArray = filterNestedArray(updatedArray, rowId);
+              const updatedArray = updateNestedRowsWithUpdateData(rowList, updatedRow.changed);
 
+              const filteredArray = filterNestedRowById(updatedArray, rowId);
               return filteredArray;
             })
           );
-        } catch {
-          console.log('error');
+        } catch (error) {
+          handleError(error, 'Ошибка удаления строки');
         }
       },
     }),

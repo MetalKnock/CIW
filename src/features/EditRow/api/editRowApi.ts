@@ -1,7 +1,11 @@
 import { baseApi } from '@/shared/api/baseApi';
 import { RequestEditRow, ResponseEditRow } from '../model/types';
 import { rowApi } from '@/entities/row/api/rowApi';
-import { updateNestedArray } from '@/entities/row/lib/rows';
+import {
+  updateNestedRowsWithUpdateData,
+  updateNestedRowsWithCurrentData,
+} from '@/entities/row/lib/rows';
+import { handleError } from '@/shared/lib/error';
 
 export const editRowApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -19,17 +23,14 @@ export const editRowApi = baseApi.injectEndpoints({
 
           dispatch(
             rowApi.util.updateQueryData('getList', entityId, (rowList) => {
-              const updatedArray = updateNestedArray(
-                rowList,
-                updatedRow.changed,
-                updatedRow.current
-              );
+              const updatedArray = updateNestedRowsWithUpdateData(rowList, updatedRow.changed);
+              const resultArray = updateNestedRowsWithCurrentData(updatedArray, updatedRow.current);
 
-              return updatedArray;
+              return resultArray;
             })
           );
-        } catch {
-          console.log('error');
+        } catch (error) {
+          handleError(error, 'Ошибка изменения строки');
         }
       },
     }),

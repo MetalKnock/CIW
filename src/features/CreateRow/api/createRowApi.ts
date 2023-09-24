@@ -1,7 +1,13 @@
 import { baseApi } from '@/shared/api/baseApi';
 import { RequestCreateRow, ResponseCreateRow } from '../model/types';
 import { rowApi } from '@/entities/row/api/rowApi';
-import { updateNestedArray } from '@/entities/row/lib/rows';
+import {
+  updateNestedRowsWithUpdateData,
+  updateNestedRowsWithCurrentData,
+  filterNestedRowById,
+} from '@/entities/row/lib/rows';
+import { handleError } from '@/shared/lib/error';
+import { INIT_ROW } from '@/shared/constants/row';
 
 export const createRowApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -23,18 +29,23 @@ export const createRowApi = baseApi.injectEndpoints({
                 return [{ ...updatedRow.current, child: [] }];
               }
 
-              const updatedArray = updateNestedArray(
-                rowList,
-                updatedRow.changed,
+              const updatedArray = updateNestedRowsWithUpdateData(rowList, updatedRow.changed);
+              const resultArray = updateNestedRowsWithCurrentData(
+                updatedArray,
                 updatedRow.current,
                 true
               );
 
-              return updatedArray;
+              return resultArray;
             })
           );
-        } catch {
-          console.log('error');
+        } catch (error) {
+          dispatch(
+            rowApi.util.updateQueryData('getList', entityId, (rowList) => {
+              return filterNestedRowById(rowList, INIT_ROW.id);
+            })
+          );
+          handleError(error, 'Ошибка создания строки');
         }
       },
     }),
