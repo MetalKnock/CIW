@@ -4,7 +4,7 @@ import { Header } from '@/widgets/Header';
 import { Menu } from '@/widgets/Menu';
 import { Main } from '@/pages/Main';
 import { HEADER_BUTTONS, MENU_LIST } from '@/shared/constants/navigate';
-import { StoreProvider } from './providers/StoreProvider';
+import { StoreProvider } from './providers/store';
 import { ToastProvider } from './providers/toast';
 
 export default function App() {
