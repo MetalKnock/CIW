@@ -77,25 +77,26 @@ export default function RowList({ rows: rowsData }: RowListProps) {
             depth={depth}
             handleDoubleClick={() => editedRowId === null && changeEditedRowId(row.id, 'edit')}
             navButtons={
-              <div
-                className={`${styles.navButtons} ${parentId ? styles.navButtons_child : ''} ${
-                  row.child.length !== 0 ? styles.navButtons_parent : ''
-                } ${editedRowId === null ? styles.navButtons_enabled : ''}`}
-              >
+              <div className={styles.navButtonsWrapper}>
                 <div
                   className={`${styles.verticalLine} ${parentId ? styles.verticalLine_child : ''}`}
                   style={{
                     height: `${HEIGHT_VERTICAL_LINE * countAncestors(rows, row.id) - 8}px`,
                   }}
                 />
-
-                <CreateRow
-                  className={styles.createButton}
-                  rowId={row.id}
-                  changeEditedRowId={changeEditedRowId}
-                  isDisabled={editedRowId !== null}
-                />
-                <DeleteRow className={styles.deleteButton} rowId={row.id} />
+                <div
+                  className={`${styles.navButtons} ${parentId ? styles.navButtons_child : ''} ${
+                    row.child.length !== 0 ? styles.navButtons_parent : ''
+                  } ${editedRowId === null ? styles.navButtons_enabled : ''}`}
+                >
+                  <CreateRow
+                    className={styles.createButton}
+                    rowId={row.id}
+                    changeEditedRowId={changeEditedRowId}
+                    isDisabled={editedRowId !== null}
+                  />
+                  <DeleteRow className={styles.deleteButton} rowId={row.id} />
+                </div>
               </div>
             }
           >
