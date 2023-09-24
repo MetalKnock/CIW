@@ -20,7 +20,7 @@ export const createRowApi = baseApi.injectEndpoints({
           dispatch(
             rowApi.util.updateQueryData('getList', entityId, (rowList) => {
               if (rowList.length === 0) {
-                rowList.push({ ...updatedRow.current, child: [] });
+                return [{ ...updatedRow.current, child: [] }];
               }
 
               const updatedArray = updateNestedArray(
