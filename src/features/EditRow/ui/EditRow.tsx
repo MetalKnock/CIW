@@ -44,6 +44,7 @@ export default function EditRow({ row, updateRow, parentId }: EditRowProps) {
               value={rowData[name]}
               onChange={(e) => handleInputChange(e, type)}
               onKeyDown={handleKeyDown}
+              aria-label={name}
             />
           </div>
         </td>

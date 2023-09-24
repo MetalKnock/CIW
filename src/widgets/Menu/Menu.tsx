@@ -18,7 +18,7 @@ export default function Menu({ className, menuList, projectName, abbreviation }:
           <h2 className={styles.title}>{projectName}</h2>
           <h4 className={styles.subtitle}>{abbreviation}</h4>
         </div>
-        <Button>
+        <Button aria-label='open submenu'>
           <ArrowBottom />
         </Button>
       </div>

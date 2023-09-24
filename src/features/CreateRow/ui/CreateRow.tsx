@@ -43,6 +43,7 @@ export default function CreateRow({
       className={`${styles.CreateRow} ${className}`}
       onClick={handleClick}
       disabled={isDisabled}
+      aria-label='create row'
     >
       <CreateIcon />
     </Button>
