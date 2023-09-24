@@ -30,6 +30,10 @@ export function updateNestedArray(
       return { ...currentData, child: [] };
     }
 
+    if (!hasZero && currentData && item.id === currentData.id) {
+      return { ...currentData, child: [...item.child] };
+    }
+
     if (!matchingItem) {
       return item;
     }
