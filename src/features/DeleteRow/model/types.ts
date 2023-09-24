@@ -1,7 +1,7 @@
-import { Row, Rows } from '@/entities/row';
+import { ResponseRows, Row } from '@/entities/row';
 
 export type ResponseDeleteRow = {
-  current: Row | null;
-  changed: Rows;
+  current: null;
+  changed: ResponseRows;
 };
 export type RequestDeleteRow = Pick<Row, 'id'> & { entityId: number };

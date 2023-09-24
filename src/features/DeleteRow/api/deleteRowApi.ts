@@ -1,7 +1,7 @@
 import { baseApi } from '@/shared/api/baseApi';
 import { RequestDeleteRow, ResponseDeleteRow } from '../model/types';
 import { rowApi } from '@/entities/row/api/rowApi';
-import { removeRowById } from '@/entities/row/lib/rows';
+import { filterNestedArray, updateNestedArray } from '@/entities/row/lib/rows';
 
 export const deleteRowApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -18,9 +18,10 @@ export const deleteRowApi = baseApi.injectEndpoints({
 
           dispatch(
             rowApi.util.updateQueryData('getList', entityId, (rowList) => {
-              if (updatedRow.current === null) {
-                removeRowById(rowList, rowId);
-              }
+              const updatedArray = updateNestedArray(rowList, updatedRow.changed);
+              const filteredArray = filterNestedArray(updatedArray, rowId);
+
+              return filteredArray;
             })
           );
         } catch {

@@ -17,23 +17,6 @@ export function findRowById(rows: Rows, id: number): Row | null {
   return null;
 }
 
-export function removeRowById(rows: Rows, id: number) {
-  let found = false;
-  rows.forEach((row, index) => {
-    if (row.id === id) {
-      rows.splice(index, 1);
-      found = true;
-    }
-
-    if (row.child && row.child.length > 0) {
-      if (removeRowById(row.child, id)) {
-        found = true;
-      }
-    }
-  });
-  return found;
-}
-
 export function updateNestedArray(
   existingArray: Rows,
   updateData: ResponseRows,
@@ -61,5 +44,15 @@ export function updateNestedArray(
     }
 
     return updatedItem;
+  });
+}
+
+export function filterNestedArray(existingArray: Rows, idForFiltering: number) {
+  return existingArray.filter((item) => {
+    if (item.child && item.child.length > 0) {
+      item.child = filterNestedArray(item.child, idForFiltering);
+    }
+
+    return item.id !== idForFiltering;
   });
 }
