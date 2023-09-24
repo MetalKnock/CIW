@@ -25,31 +25,21 @@
       height: to-rem(1px);
       background: var(--quaternary1-color);
     }
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: to-rem(14px);
-      left: to-rem(-6px);
-      height: to-rem(63px);
-      width: to-rem(1px);
-      background: var(--quaternary1-color);
-    }
   }
-
-  // &_parent {
-  //   &::after {
-  //     content: '';
-  //     position: absolute;
-  //     top: to-rem(22px);
-  //     transform: translateX(-50%);
-  //     left: 50%;
-  //     height: to-rem(22px);
-  //     width: to-rem(1px);
-  //     background: var(--quaternary1-color);
-  //   }
-  // }
 }
 
+.verticalLine {
+  display: none;
+  &_child {
+    display: block;
+    position: absolute;
+    bottom: to-rem(14px);
+    left: to-rem(-6px);
+    height: to-rem(63px);
+    width: to-rem(1px);
+    background: var(--quaternary1-color);
+  }
+}
 .createButton {
   z-index: 1;
 }

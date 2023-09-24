@@ -1,4 +1,5 @@
 import { ResponseRow, ResponseRows, Row, Rows } from '@/entities/row';
+import { INIT_ROW } from '@/shared/constants/row';
 
 export function findRowById(rows: Rows, id: number): Row | null {
   const stack = [...rows];
@@ -21,16 +22,16 @@ export function updateNestedArray(
   existingArray: Rows,
   updateData: ResponseRows,
   currentData?: ResponseRow,
-  hasZero?: boolean
+  hasDefaultInit?: boolean
 ) {
   return existingArray.map((item) => {
     const matchingItem = updateData.find((newItem) => newItem.id === item.id);
 
-    if (hasZero && currentData && item.id === 0) {
+    if (hasDefaultInit && currentData && item.id === INIT_ROW.id) {
       return { ...currentData, child: [] };
     }
 
-    if (!hasZero && currentData && item.id === currentData.id) {
+    if (!hasDefaultInit && currentData && item.id === currentData.id) {
       return { ...currentData, child: [...item.child] };
     }
 
@@ -44,7 +45,7 @@ export function updateNestedArray(
     };
 
     if (item.child && item.child.length > 0) {
-      updatedItem.child = updateNestedArray(item.child, updateData, currentData, hasZero);
+      updatedItem.child = updateNestedArray(item.child, updateData, currentData, hasDefaultInit);
     }
 
     return updatedItem;
@@ -59,4 +60,21 @@ export function filterNestedArray(existingArray: Rows, idForFiltering: number) {
 
     return item.id !== idForFiltering;
   });
+}
+
+export function countAncestors(rows: Rows, targetId: number) {
+  let count = 1;
+  function recursiveCountAncestors(items: Rows) {
+    for (let i = 0; i < items.length; i += 1) {
+      if (items[i].id === targetId) {
+        return;
+      }
+      count += 1;
+      if (items[i].child.length > 0) {
+        recursiveCountAncestors(items[i].child);
+      }
+    }
+  }
+  recursiveCountAncestors(rows);
+  return count;
 }

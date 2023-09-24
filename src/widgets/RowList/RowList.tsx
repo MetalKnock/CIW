@@ -1,14 +1,15 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { EditRow } from '@/features/EditRow/';
 import { Row, RowItem, RowView, Rows } from '@/entities/row';
 import { CreateRow } from '@/features/CreateRow';
 import { DeleteRow } from '@/features/DeleteRow';
-import { INIT_ROW } from '@/shared/constants/row';
+import { HEIGHT_VERTICAL_LINE, INIT_ROW } from '@/shared/constants/row';
 import { useCreateRowMutation } from '@/features/CreateRow/api/createRowApi';
 import { useEditRowMutation } from '@/features/EditRow/api/editRowApi';
 import { useAppSelector } from '@/shared/hooks/useAppSelector';
-import styles from './RowList.module.scss';
 import { TypeEdited } from '@/shared/types/common';
+import { countAncestors } from '@/entities/row/lib/rows';
+import styles from './RowList.module.scss';
 
 interface RowListProps {
   rows: Rows;
@@ -69,9 +70,7 @@ export default function RowList({ rows: rowsData }: RowListProps) {
   }
 
   const renderRows = (rows: Rows, depth: number = 0, parentId: number | null = null) => {
-    return rows.map((row, index) => {
-      console.log('depth', depth, index);
-
+    return rows.map((row) => {
       return (
         <Fragment key={row.id}>
           <RowItem
@@ -83,6 +82,13 @@ export default function RowList({ rows: rowsData }: RowListProps) {
                   row.child.length !== 0 ? styles.navButtons_parent : ''
                 } ${editedRowId === null ? styles.navButtons_enabled : ''}`}
               >
+                <div
+                  className={`${styles.verticalLine} ${parentId ? styles.verticalLine_child : ''}`}
+                  style={{
+                    height: `${HEIGHT_VERTICAL_LINE * countAncestors(rows, row.id) - 8}px`,
+                  }}
+                />
+
                 <CreateRow
                   className={styles.createButton}
                   rowId={row.id}

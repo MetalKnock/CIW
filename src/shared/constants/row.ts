@@ -15,3 +15,5 @@ export const INIT_ROW: Row = {
   supportCosts: 0,
   child: [],
 };
+
+export const HEIGHT_VERTICAL_LINE = 63;
