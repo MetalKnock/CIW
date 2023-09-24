@@ -18,7 +18,11 @@ export default function DeleteRow({ className, rowId }: DeleteRowProps) {
   };
 
   return (
-    <Button className={`${styles.DeleteRow} ${className}`} onClick={handleClick}>
+    <Button
+      className={`${styles.DeleteRow} ${className}`}
+      onClick={handleClick}
+      aria-label='delete row'
+    >
       <DeleteIcon />
     </Button>
   );

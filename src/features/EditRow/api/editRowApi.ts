@@ -1,7 +1,11 @@
 import { baseApi } from '@/shared/api/baseApi';
 import { RequestEditRow, ResponseEditRow } from '../model/types';
 import { rowApi } from '@/entities/row/api/rowApi';
-import { findRowById } from '@/entities/row/lib/rows';
+import {
+  updateNestedRowsWithUpdateData,
+  updateNestedRowsWithCurrentData,
+} from '@/entities/row/lib/rows';
+import { handleError } from '@/shared/lib/error';
 
 export const editRowApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -13,50 +17,20 @@ export const editRowApi = baseApi.injectEndpoints({
           body: patch,
         };
       },
-      async onQueryStarted({ entityId, id: rowId }, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ entityId }, { dispatch, queryFulfilled }) {
         try {
           const { data: updatedRow } = await queryFulfilled;
 
           dispatch(
             rowApi.util.updateQueryData('getList', entityId, (rowList) => {
-              const foundRow = findRowById(rowList, rowId);
-              console.log(rowId);
-              if (foundRow) {
-                console.log(2);
-                const {
-                  id,
-                  rowName,
-                  equipmentCosts,
-                  estimatedProfit,
-                  machineOperatorSalary,
-                  mainCosts,
-                  materials,
-                  mimExploitation,
-                  overheads,
-                  salary,
-                  supportCosts,
-                  total,
-                } = updatedRow.current;
-                Object.assign(foundRow, {
-                  id,
-                  rowName,
-                  equipmentCosts,
-                  estimatedProfit,
-                  machineOperatorSalary,
-                  mainCosts,
-                  materials,
-                  mimExploitation,
-                  overheads,
-                  salary,
-                  supportCosts,
-                  total,
-                  // mb this error
-                });
-              }
+              const updatedArray = updateNestedRowsWithUpdateData(rowList, updatedRow.changed);
+              const resultArray = updateNestedRowsWithCurrentData(updatedArray, updatedRow.current);
+
+              return resultArray;
             })
           );
-        } catch {
-          console.log('error');
+        } catch (error) {
+          handleError(error, 'Ошибка изменения строки');
         }
       },
     }),

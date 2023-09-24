@@ -9,19 +9,19 @@ export default function RowView({ row }: RowViewProps) {
   const { rowName, salary, equipmentCosts, overheads, estimatedProfit } = row;
   return (
     <>
-      <td>
+      <td className={styles.cellWrapper}>
         <div className={styles.cell}>{rowName}</div>
       </td>
-      <td>
+      <td className={styles.cellWrapper}>
         <div className={styles.cell}>{salary}</div>
       </td>
-      <td>
+      <td className={styles.cellWrapper}>
         <div className={styles.cell}>{equipmentCosts}</div>
       </td>
-      <td>
+      <td className={styles.cellWrapper}>
         <div className={styles.cell}>{overheads}</div>
       </td>
-      <td>
+      <td className={styles.cellWrapper}>
         <div className={styles.cell}>{estimatedProfit}</div>
       </td>
     </>

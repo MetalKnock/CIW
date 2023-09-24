@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { Row } from '@/entities/row/model/rowTypes';
 import { INPUT_FIELDS } from '../model/constants';
@@ -23,20 +24,27 @@ export default function EditRow({ row, updateRow, parentId }: EditRowProps) {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      updateRow({ ...rowData, parentId });
+      if (!rowData.rowName) {
+        toast.error("Ячейка 'Наименование работ' не может быть пустой");
+      } else {
+        updateRow({ ...rowData, parentId });
+      }
     }
   };
 
   return (
     <>
       {INPUT_FIELDS.map(({ name, type }) => (
-        <td key={name}>
+        <td className={styles.cellWrapper} key={name}>
           <div className={styles.cell}>
             <Input
+              className={styles.input}
               name={name}
+              autoFocus={name === 'rowName'}
               value={rowData[name]}
               onChange={(e) => handleInputChange(e, type)}
               onKeyDown={handleKeyDown}
+              aria-label={name}
             />
           </div>
         </td>

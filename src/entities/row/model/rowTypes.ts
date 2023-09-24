@@ -15,3 +15,7 @@ export interface Row {
 }
 
 export type Rows = Row[];
+
+export type ResponseRow = Omit<Row, 'child'>;
+
+export type ResponseRows = ResponseRow[];

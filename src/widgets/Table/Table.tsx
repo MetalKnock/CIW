@@ -1,8 +1,8 @@
-import RowList from '@/widgets/RowList/RowList';
 import { useGetListQuery } from '@/entities/row';
 import { ReactComponent as Loader } from '@/shared/assets/loader.svg';
 import { useAppSelector } from '@/shared/hooks/useAppSelector';
 import { TABLE_TITLES } from '@/shared/constants/form';
+import { RowList } from '../RowList';
 import styles from './Table.module.scss';
 
 interface TableProps {
@@ -11,7 +11,11 @@ interface TableProps {
 
 export default function Table({ className }: TableProps) {
   const { id: entityId } = useAppSelector((state) => state.entity);
-  const { data: rows = [], isLoading } = useGetListQuery(entityId);
+  const { data: rows = [], isLoading, isError } = useGetListQuery(entityId);
+
+  if (isError) {
+    return <h3 className={styles.title}>Не удалось получить данные</h3>;
+  }
 
   if (isLoading) {
     return (

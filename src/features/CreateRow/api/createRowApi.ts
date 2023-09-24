@@ -1,7 +1,13 @@
 import { baseApi } from '@/shared/api/baseApi';
 import { RequestCreateRow, ResponseCreateRow } from '../model/types';
 import { rowApi } from '@/entities/row/api/rowApi';
-import { findRowById } from '@/entities/row/lib/rows';
+import {
+  updateNestedRowsWithUpdateData,
+  updateNestedRowsWithCurrentData,
+  filterNestedRowById,
+} from '@/entities/row/lib/rows';
+import { handleError } from '@/shared/lib/error';
+import { INIT_ROW } from '@/shared/constants/row';
 
 export const createRowApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -20,46 +26,26 @@ export const createRowApi = baseApi.injectEndpoints({
           dispatch(
             rowApi.util.updateQueryData('getList', entityId, (rowList) => {
               if (rowList.length === 0) {
-                rowList.push({ ...updatedRow.current, child: [] });
+                return [{ ...updatedRow.current, child: [] }];
               }
 
-              const foundRow = findRowById(rowList, 0);
+              const updatedArray = updateNestedRowsWithUpdateData(rowList, updatedRow.changed);
+              const resultArray = updateNestedRowsWithCurrentData(
+                updatedArray,
+                updatedRow.current,
+                true
+              );
 
-              if (foundRow) {
-                const {
-                  id,
-                  rowName,
-                  equipmentCosts,
-                  estimatedProfit,
-                  machineOperatorSalary,
-                  mainCosts,
-                  materials,
-                  mimExploitation,
-                  overheads,
-                  salary,
-                  supportCosts,
-                  total,
-                } = updatedRow.current;
-                Object.assign(foundRow, {
-                  id,
-                  rowName,
-                  equipmentCosts,
-                  estimatedProfit,
-                  machineOperatorSalary,
-                  mainCosts,
-                  materials,
-                  mimExploitation,
-                  overheads,
-                  salary,
-                  supportCosts,
-                  total,
-                  child: [],
-                });
-              }
+              return resultArray;
             })
           );
-        } catch {
-          console.log('error');
+        } catch (error) {
+          dispatch(
+            rowApi.util.updateQueryData('getList', entityId, (rowList) => {
+              return filterNestedRowById(rowList, INIT_ROW.id);
+            })
+          );
+          handleError(error, 'Ошибка создания строки');
         }
       },
     }),
