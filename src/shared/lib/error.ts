@@ -1,8 +1,6 @@
 import { toast } from 'react-toastify';
 
 export function handleError(error: unknown, message: string) {
-  if (error instanceof Error) {
-    toast.error(error.message);
-  }
-  toast.error(message);
+  const errorMessage = error instanceof Error ? error.message : message;
+  toast.error(errorMessage);
 }
