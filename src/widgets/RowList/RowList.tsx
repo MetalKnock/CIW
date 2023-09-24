@@ -1,53 +1,20 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 import { EditRow } from '@/features/EditRow/';
-import { Row, RowItem, RowView, Rows } from '@/entities/row';
+import { RowItem, RowView, Rows } from '@/entities/row';
 import { CreateRow } from '@/features/CreateRow';
 import { DeleteRow } from '@/features/DeleteRow';
 import { HEIGHT_VERTICAL_LINE, INIT_ROW } from '@/shared/constants/row';
-import { useCreateRowMutation } from '@/features/CreateRow/api/createRowApi';
-import { useEditRowMutation } from '@/features/EditRow/api/editRowApi';
-import { useAppSelector } from '@/shared/hooks/useAppSelector';
-import { TypeEdited } from '@/shared/types/common';
+
 import { countAncestors } from '@/entities/row/lib/rows';
 import styles from './RowList.module.scss';
+import { useRowList } from './hooks/useRowList';
 
 interface RowListProps {
   rows: Rows;
 }
 
 export default function RowList({ rows: rowsData }: RowListProps) {
-  const { id: entityId } = useAppSelector((state) => state.entity);
-  const [editedRowId, setEditedRowId] = useState<number | null>(null);
-  const [typeEdited, setTypeEdited] = useState<TypeEdited>(null);
-  const [createRow] = useCreateRowMutation();
-  const [editRow] = useEditRowMutation();
-
-  const changeEditedRowId = (id: number | null, type: TypeEdited) => {
-    setEditedRowId(id);
-    setTypeEdited(type);
-  };
-
-  const saveNewRow = async (data: Row & { parentId: number | null }) => {
-    switch (typeEdited) {
-      case 'create': {
-        await createRow({ ...data, entityId });
-        break;
-      }
-      case 'edit': {
-        await editRow({ ...data, entityId });
-        break;
-      }
-      default:
-        break;
-    }
-    changeEditedRowId(null, null);
-  };
-
-  useEffect(() => {
-    if (rowsData.length === 0) {
-      changeEditedRowId(0, 'create');
-    }
-  }, [rowsData.length]);
+  const { editedRowId, changeEditedRowId, saveNewRow } = useRowList(rowsData);
 
   if (rowsData.length === 0) {
     return (
