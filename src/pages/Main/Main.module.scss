@@ -18,8 +18,8 @@
 
 .tableWrapper {
   padding: to-rem(10px);
-  background: var(--tertiary-color);
+  background: var(--secondary-background-color);
   flex-grow: 1;
   overflow-x: auto;
-  // width: 300px;
+  width: calc(100vw - var(--width-menu) - 1px);
 }

@@ -1,6 +1,14 @@
+.cellWrapper {
+  min-width: to-rem(200px);
+}
 .cell {
   padding: 0 to-rem(12px);
   min-height: to-rem(60px);
   display: flex;
   align-items: center;
+}
+
+.input {
+  flex-grow: 1;
+  width: to-rem(166px);
 }

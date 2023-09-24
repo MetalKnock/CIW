@@ -8,14 +8,14 @@
   justify-content: space-between;
   padding: to-rem(8px) to-rem(7px) to-rem(8px) to-rem(20px);
   border-bottom: 1px solid var(--border-color);
-  min-width: 234px;
+  min-width: var(--width-menu);
   min-height: 45px;
 }
 
 .projectInfo {
   display: flex;
   flex-direction: column;
-  color: var(--quaternary-color);
+  color: var(--secondary-color);
 }
 
 .title {
@@ -44,6 +44,6 @@
   flex-grow: 1;
   padding: to-rem(5px) to-rem(20px);
   &_active {
-    background: var(--quaternary-color);
+    background: var(--secondary-color);
   }
 }

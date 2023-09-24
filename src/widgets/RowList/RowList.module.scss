@@ -7,6 +7,7 @@
   padding: to-rem(6px);
   width: fit-content;
   position: relative;
+  margin-right: to-rem(34px);
 
   &_enabled {
     &:hover {
@@ -16,6 +17,7 @@
       & .deleteButton {
         display: flex;
       }
+      margin-right: to-rem(8px);
     }
   }
 }
@@ -29,14 +31,14 @@
     left: to-rem(-6px);
     height: to-rem(63px);
     width: to-rem(1px);
-    background: var(--quaternary1-color);
+    background: var(--tertiary-background-color);
     &::before {
       content: '';
       position: absolute;
       bottom: 0;
       width: to-rem(12px);
       height: to-rem(1px);
-      background: var(--quaternary1-color);
+      background: var(--tertiary-background-color);
       z-index: 1;
     }
   }

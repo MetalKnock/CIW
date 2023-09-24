@@ -10,13 +10,14 @@
 
 .headerCell {
   padding: 0 to-rem(12px) to-rem(12px) to-rem(12px);
-  color: var(--quaternary-color);
+  color: var(--secondary-color);
   text-align: start;
   font-weight: var(--font-weight-sm);
 }
 
 .headerRow {
   border-bottom: 1px solid var(--border-color);
+  text-wrap: nowrap;
 }
 
 .loaderWrapper {
