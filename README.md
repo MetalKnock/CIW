@@ -1,27 +1,34 @@
-# React + TypeScript + Vite
+# CIW
+> Live demo [_here_](https://ciw-metalknock.netlify.app/).
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Installing / Getting started
 
-Currently, two official plugins are available:
+In the project directory, you can run:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
 ```
+# Runs the app in the development mode
+$ npm run start
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# Builds the app for production
+$ npm run build
+
+# Lints your TypeScript and TypeScript React files using ESLint. It reports any linting errors or warnings.
+Make sure to follow the linting rules specified in the `.eslintrc` configuration file.
+$ npm run lint
+
+# Lints your CSS files using Stylelint in the `src` directory.
+$ npm run lint:css
+
+# Lints your CSS files using Stylelint and automatically fixes any fixable issues.
+$ npm run lint:css:fix
+```
+## Technologies Used
+ - React
+ - TypeScript
+ - Redux Toolkit
+ - Scss
+ - ESLint
+ - Stylelint
+ - Prettier
+ - Vite
+ - FSD
