@@ -6,8 +6,8 @@
 
 .row {
   display: flex;
-  border-bottom: 1px solid var(--border-color);
   min-height: 45px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .fullNameWrapper {
@@ -17,9 +17,11 @@
 }
 
 .tableWrapper {
-  padding: to-rem(10px);
-  background: var(--secondary-background-color);
-  flex-grow: 1;
   overflow-x: auto;
+  flex-grow: 1;
+
   width: calc(100vw - var(--width-menu) - 1px);
+  padding: to-rem(10px);
+
+  background: var(--secondary-background-color);
 }

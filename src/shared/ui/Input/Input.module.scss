@@ -4,9 +4,11 @@
 }
 
 .input {
-  color: var(--quaternary2-color);
-  border: none;
-  background: transparent;
   padding: to-rem(10px);
+
+  color: var(--quaternary2-color);
+
+  background: transparent;
+  border: none;
   outline: none;
 }
