@@ -1,7 +1,7 @@
 import { baseApi } from '@/shared/api/baseApi';
 import { RequestCreateRow, ResponseCreateRow } from '../model/types';
 import { rowApi } from '@/entities/row/api/rowApi';
-import { findRowById } from '@/entities/row/lib/rows';
+import { updateNestedArray } from '@/entities/row/lib/rows';
 
 export const createRowApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -23,39 +23,14 @@ export const createRowApi = baseApi.injectEndpoints({
                 rowList.push({ ...updatedRow.current, child: [] });
               }
 
-              const foundRow = findRowById(rowList, 0);
+              const updatedArray = updateNestedArray(
+                rowList,
+                updatedRow.changed,
+                updatedRow.current,
+                true
+              );
 
-              if (foundRow) {
-                const {
-                  id,
-                  rowName,
-                  equipmentCosts,
-                  estimatedProfit,
-                  machineOperatorSalary,
-                  mainCosts,
-                  materials,
-                  mimExploitation,
-                  overheads,
-                  salary,
-                  supportCosts,
-                  total,
-                } = updatedRow.current;
-                Object.assign(foundRow, {
-                  id,
-                  rowName,
-                  equipmentCosts,
-                  estimatedProfit,
-                  machineOperatorSalary,
-                  mainCosts,
-                  materials,
-                  mimExploitation,
-                  overheads,
-                  salary,
-                  supportCosts,
-                  total,
-                  child: [],
-                });
-              }
+              return updatedArray;
             })
           );
         } catch {

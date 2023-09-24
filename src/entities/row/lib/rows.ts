@@ -1,4 +1,4 @@
-import { Row, Rows } from '@/entities/row';
+import { ResponseRow, ResponseRows, Row, Rows } from '@/entities/row';
 
 export function findRowById(rows: Rows, id: number): Row | null {
   const stack = [...rows];
@@ -32,4 +32,34 @@ export function removeRowById(rows: Rows, id: number) {
     }
   });
   return found;
+}
+
+export function updateNestedArray(
+  existingArray: Rows,
+  updateData: ResponseRows,
+  currentData?: ResponseRow,
+  hasZero?: boolean
+) {
+  return existingArray.map((item) => {
+    const matchingItem = updateData.find((newItem) => newItem.id === item.id);
+
+    if (hasZero && currentData && item.id === 0) {
+      return { ...currentData, child: [] };
+    }
+
+    if (!matchingItem) {
+      return item;
+    }
+
+    const updatedItem: Row = {
+      ...item,
+      ...matchingItem,
+    };
+
+    if (item.child && item.child.length > 0) {
+      updatedItem.child = updateNestedArray(item.child, updateData, currentData, hasZero);
+    }
+
+    return updatedItem;
+  });
 }
