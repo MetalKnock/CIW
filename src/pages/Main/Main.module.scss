@@ -1,0 +1,27 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.row {
+  display: flex;
+  min-height: 45px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.fullNameWrapper {
+  padding: to-rem(11px) to-rem(15px) to-rem(12px) to-rem(15px);
+  font-size: var(--font-size-lg);
+  border-right: 1px solid var(--border-color);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  flex-grow: 1;
+
+  width: calc(100vw - var(--width-menu) - 1px);
+  padding: to-rem(10px);
+
+  background: var(--secondary-background-color);
+}

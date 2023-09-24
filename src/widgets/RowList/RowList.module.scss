@@ -1,0 +1,60 @@
+.navButtonsWrapper {
+  position: relative;
+}
+
+.deleteButton {
+  display: none;
+}
+
+.navButtons {
+  position: relative;
+
+  display: flex;
+
+  width: fit-content;
+  margin-right: to-rem(34px);
+  padding: to-rem(6px);
+
+  &_enabled {
+    &:hover {
+      gap: to-rem(10px);
+      margin-right: to-rem(8px);
+      background: var(--border-color);
+      border-radius: 6px;
+
+      & .deleteButton {
+        display: flex;
+      }
+    }
+  }
+}
+
+.verticalLine {
+  display: none;
+
+  &_child {
+    position: absolute;
+    bottom: to-rem(14px);
+    left: to-rem(-6px);
+
+    display: block;
+
+    width: to-rem(1px);
+    height: to-rem(63px);
+
+    background: var(--tertiary-background-color);
+
+    &::before {
+      content: '';
+
+      position: absolute;
+      z-index: 1;
+      bottom: 0;
+
+      width: to-rem(12px);
+      height: to-rem(1px);
+
+      background: var(--tertiary-background-color);
+    }
+  }
+}

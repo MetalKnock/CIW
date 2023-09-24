@@ -1,0 +1,10 @@
+.cellWrapper {
+  min-width: to-rem(200px);
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  min-height: to-rem(60px);
+  padding: 0 to-rem(12px);
+}
