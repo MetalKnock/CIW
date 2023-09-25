@@ -29,8 +29,11 @@ export default function Table({ className }: TableProps) {
     <table className={`${styles.table} ${className}`}>
       <thead>
         <tr className={styles.headerRow}>
-          {TABLE_TITLES.map((title) => (
-            <th className={styles.headerCell} key={title}>
+          {TABLE_TITLES.map((title, index) => (
+            <th
+              className={`${styles.headerCell} ${index === 1 ? styles.headerCell_responsive : ''}`}
+              key={title}
+            >
               {title}
             </th>
           ))}
