@@ -35,7 +35,7 @@ export default function EditRow({ row, updateRow, parentId }: EditRowProps) {
   return (
     <>
       {INPUT_FIELDS.map(({ name, type }) => (
-        <td className={styles.cellWrapper} key={name}>
+        <td key={name}>
           <div className={styles.cell}>
             <Input
               className={styles.input}
