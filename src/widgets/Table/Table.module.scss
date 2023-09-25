@@ -15,6 +15,14 @@
   font-weight: var(--font-weight-sm);
   color: var(--secondary-color);
   text-align: start;
+
+  &:not(:first-child, .headerCell_responsive) {
+    min-width: to-rem(200px);
+  }
+
+  &_responsive {
+    min-width: calc(100vw - var(--width-menu) - 200px * 5);
+  }
 }
 
 .headerRow {

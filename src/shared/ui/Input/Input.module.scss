@@ -1,9 +1,12 @@
 .inputWrapper {
+  display: flex;
   border: 1px solid var(--border-color);
   border-radius: 6px;
 }
 
 .input {
+  flex-grow: 1;
+
   padding: to-rem(10px);
 
   color: var(--quaternary2-color);
