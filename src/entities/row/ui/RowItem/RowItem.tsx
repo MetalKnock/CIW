@@ -18,7 +18,10 @@ export default function RowItem({
 }: RowItemProps) {
   return (
     <tr className={`${styles.rowItem} ${className}`} onDoubleClick={handleDoubleClick}>
-      <td className={styles.navButtonsWrapper} style={{ paddingLeft: `${depth * 20 + 10}px` }}>
+      <td
+        className={styles.navButtonsWrapper}
+        style={{ paddingLeft: `${(depth * 20 + 10) / 16}rem` }}
+      >
         {navButtons}
       </td>
       {children}
