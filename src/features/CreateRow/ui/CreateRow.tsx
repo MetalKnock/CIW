@@ -9,18 +9,12 @@ import { TypeEdited } from '@/shared/types/common';
 import styles from './CreateRow.module.scss';
 
 interface CreateRowProps {
-  className?: string;
   rowId: number;
   isDisabled: boolean;
   changeEditedRowId: (id: number | null, type: TypeEdited) => void;
 }
 
-export default function CreateRow({
-  className,
-  rowId,
-  isDisabled,
-  changeEditedRowId,
-}: CreateRowProps) {
+export default function CreateRow({ rowId, isDisabled, changeEditedRowId }: CreateRowProps) {
   const { id: entityId } = useAppSelector((state) => state.entity);
 
   const dispatch = useAppDispatch();
@@ -39,17 +33,8 @@ export default function CreateRow({
   };
 
   return (
-    <Button
-      className={`${styles.CreateRow} ${className}`}
-      onClick={handleClick}
-      disabled={isDisabled}
-      aria-label='create row'
-    >
-      <CreateIcon />
+    <Button onClick={handleClick} disabled={isDisabled} aria-label='create row'>
+      <CreateIcon className={styles.createIcon} />
     </Button>
   );
 }
-
-CreateRow.defaultProps = {
-  className: '',
-};

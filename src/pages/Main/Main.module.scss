@@ -20,7 +20,7 @@
   overflow-x: auto;
   flex-grow: 1;
 
-  width: calc(100vw - var(--width-menu) - 1px);
+  width: calc(100vw - var(--width-menu) - 3px);
   padding: to-rem(10px);
 
   background: var(--secondary-background-color);
